@@ -75,28 +75,48 @@
 (defrule moverWillySouth (declare (salience 1))
     (directions $? south $?)
 	?h <- (hice east)
+    ?act <- (act algo)
     =>
 	(retract ?h)
 	(assert (hice south))
+    (retract ?act)
+   (assert (act nada)) 
     (moveWilly south)
 )
 
 (defrule moverWillyEast (declare (salience 1))
     (directions $? east $?)
 	?h <- (hice south)
+    ?act <- (act algo)
     =>
 	(retract ?h)
 	(assert (hice east))
+    (retract ?act)
+   (assert (act nada)) 
     (moveWilly east)
 )
 
-(defrule perceptPull (declare (salience 200))
+(defrule perceptPull (declare (salience 2000))
    (percepts Pull)
    (ant ?ant)
+   ?h <- (hice ?hice)
+   ?act <- (act algo)
    =>
    (moveWilly ?ant)
+   (retract ?h)
+   (assert (hice ?ant))
+   (retract ?act)
+   (assert (act nada))
 )
 
+(defrule perceptAlien (declare (salience 2001))
+(percepts Noise)
+(hasLaser)
+(hice ?hice)
+=>
+(fireLaser ?hice)
+
+)
 
 
 
