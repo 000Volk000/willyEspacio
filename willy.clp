@@ -1,38 +1,41 @@
-(deffacts estadoInicial
-    (hice nada) ;
-    (nMovimientos 0) ;
+(defrule moveWilly
+   (directions $? ?direction $?)
+   =>
+   (moveWilly ?direction)
 )
 
-(defrule moverWilly
-    (directions $? south $?)
-    ?h <- (hice nada)
-    =>
-	(retract ?h)
-	(assert (hice south))
-    (moveWilly south)
+(deffacts initial-fact
+   (ant nada) ; Define el hecho inicial
 )
 
-(defrule moverWillySouth (declare (salience 1))
-    (directions $? south $?)
-	?h <- (hice east)
-    =>
-	(retract ?h)
-	(assert (hice south))
-    (moveWilly south)
+(defrule moveWillySouth (declare (salience 10))
+   (directions $? south $?) ; Verifica que hay una dirección "south"
+   ?a <- (ant ?current)           ; Verifica que el hecho "ant" existe
+   =>
+   (retract ?a) ; Elimina el hecho actual
+   (assert (ant north))     ; Inserta el nuevo valor de "ant"
+   (moveWilly south)        ; Realiza el movimiento
 )
 
-(defrule moverWillyEast (declare (salience 1))
-    (directions $? east $?)
-	?h <- (hice south)
-    =>
-	(retract ?h)
-	(assert (hice east))
-    (moveWilly east)
+(defrule moveWillyEast (declare (salience 1))
+   (directions $? east $?)  ; Verifica que hay una dirección "east"
+   ?a <- (ant ?current)           ; Verifica que el hecho "ant" existe
+   =>
+   (retract ?a) ; Elimina el hecho actual
+   (assert (ant west))      ; Inserta el nuevo valor de "ant"
+   (moveWilly east)         ; Realiza el movimiento
+)
+
+(defrule perceptPull (declare (salience 200))
+   (percepts Pull)
+   (ant ?ant)
+   =>
+   (moveWilly ?ant)
 )
 
 (defrule fireWilly
-	(hasLaser)
-	(directions $? ?direction $?)
-	=>
-	(fireLaser ?direction)
-	)
+   (hasLaser)
+   (directions $? ?direction $?)
+   =>
+   (fireLaser ?direction)
+)
