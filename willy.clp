@@ -388,7 +388,7 @@
     ?pos <- (pos ?x1 ?y1)
     ?casilla <- (casilla (x ?x1) (y ?y1) (visitado ?) (radiacion ?radiacion))
     ?Mov <- (nMovimientos ?n)
-    (test (< ?n 600))
+    (test (< ?n 575))
    =>
    (retract ?ant)
    (assert (ant south))
@@ -409,7 +409,7 @@
     ?pos <- (pos ?x1 ?y1)
     ?casilla <- (casilla (x ?x1) (y ?y1) (visitado ?) (radiacion ?radiacion))
     ?Mov <- (nMovimientos ?n)
-(test (< ?n 600))
+(test (< ?n 575))
    =>
    (retract ?ant)
    (assert (ant north))
@@ -431,7 +431,7 @@
    ?pos <- (pos ?x1 ?y1)
    ?casilla <- (casilla (x ?x1) (y ?y1) (visitado ?) (radiacion ?radiacion))
     ?Mov <- (nMovimientos ?n)
-(test (< ?n 600))
+(test (< ?n 575))
    =>
    (retract ?ant)
    (assert (ant west))
@@ -453,7 +453,7 @@
    ?pos <- (pos ?x1 ?y1)
    ?casilla <- (casilla (x ?x1) (y ?y1) (visitado ?) (radiacion ?radiacion))
    ?Mov <- (nMovimientos ?n)
-   (test (< ?n 600))
+   (test (< ?n 575))
    =>
    (retract ?ant)
    (assert (ant east))
