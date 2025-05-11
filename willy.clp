@@ -1,3 +1,5 @@
+;Definiciones
+
 (deftemplate casilla
     (slot x (type NUMBER))       ; Coordenada X
     (slot y (type NUMBER))       ; Coordenada Y
@@ -376,6 +378,8 @@
     (act inicial)
     (pos 0 0)
 )
+;----------------------------------Actualizar las posiciones---------------------------------------
+;----------------------------------Actualizar las posiciones(normal)---------------------------------------
 
 (defrule actAntNorth (declare (salience 1000))
    ?act <- (act nada)
@@ -445,6 +449,77 @@
    (retract ?casilla)
    (assert (casilla (x ?x1) (y ?y1) (visitado true) (radiacion ?radiacion)))
 )
+;----------------------------------Actualizar las posiciones(alien cerca)---------------------------------------
+(defrule actAntNorthAlien (declare (salience 1000))
+   ?act <- (act ruido)
+   ?ant <- (ant ?)
+   (hice north)
+    ?pos <- (pos ?x1 ?y1)
+    ?casilla <- (casilla (x ?x1) (y ?y1) (visitado ?) (radiacion ?))
+   =>
+   (retract ?ant)
+   (assert (ant south))
+   (retract ?act)
+   (assert (act algo))
+   (retract ?pos)
+   (assert (pos ?x1 (- ?y1 1)))
+   (retract ?casilla)
+   (assert (casilla (x ?x1) (y ?y1) (visitado true) (radiacion true)))
+
+)
+
+(defrule actAntSouthAlien  (declare (salience 1000))
+   ?act <- (act ruido)
+   ?ant <- (ant ?)
+   (hice south)
+    ?pos <- (pos ?x1 ?y1)
+    ?casilla <- (casilla (x ?x1) (y ?y1) (visitado ?) (radiacion ?))
+   =>
+   (retract ?ant)
+   (assert (ant north))
+   (retract ?act)
+   (assert (act algo))
+    (retract ?pos)
+   (assert (pos ?x1 (+ ?y1 1)))
+    (retract ?casilla)
+   (assert (casilla (x ?x1) (y ?y1) (visitado true) (radiacion true)))
+)
+
+(defrule actAntEastAlien (declare (salience 1000))
+   ?act <- (act ruido)
+   ?ant <- (ant ?)
+   (hice east)
+   ?pos <- (pos ?x1 ?y1)
+   ?casilla <- (casilla (x ?x1) (y ?y1) (visitado ?) (radiacion ?))
+   =>
+   (retract ?ant)
+   (assert (ant west))
+   (retract ?act)
+   (assert (act algo))
+    (retract ?pos)
+   (assert (pos (+ ?x1 1) ?y1))
+   (retract ?casilla)
+   (assert (casilla (x ?x1) (y ?y1) (visitado true) (radiacion true)))
+)
+
+(defrule actAntWestAlien  (declare (salience 1000))
+   ?act <- (act ruido)
+   ?ant <- (ant ?)
+   (hice west)
+   ?pos <- (pos ?x1 ?y1)
+   ?casilla <- (casilla (x ?x1) (y ?y1) (visitado ?) (radiacion ?))
+   =>
+   (retract ?ant)
+   (assert (ant east))
+   (retract ?act)
+   (assert (act algo))
+      (retract ?pos)
+   (assert (pos (- ?x1 1) ?y1))
+   (retract ?casilla)
+   (assert (casilla (x ?x1) (y ?y1) (visitado true) (radiacion true)))
+)
+;-----------------------------------------------Movimientos---------------------------------------
+
 (defrule moverWillyInicio
     ?act <- (act inicial)
     ?h <- (hice nada)
@@ -491,6 +566,7 @@
    (assert (act nada)) 
     (moveWilly east)
 )
+;------------------------------------------------Detectar---------------------------------------
 
 (defrule perceptPull (declare (salience 2000))
    (percepts Pull)
@@ -515,7 +591,7 @@
    (retract ?h)
    (assert (hice ?ant))
    (retract ?act)
-   (assert (act nada))
+   (assert (act ruido))
 )
 
 
