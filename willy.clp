@@ -387,6 +387,8 @@
    (hice north)
     ?pos <- (pos ?x1 ?y1)
     ?casilla <- (casilla (x ?x1) (y ?y1) (visitado ?) (radiacion ?radiacion))
+    ?Mov <- (nMovimientos ?n)
+    (test (< ?n 600))
    =>
    (retract ?ant)
    (assert (ant south))
@@ -396,7 +398,8 @@
    (assert (pos ?x1 (- ?y1 1)))
    (retract ?casilla)
    (assert (casilla (x ?x1) (y ?y1) (visitado true) (radiacion ?radiacion)))
-
+   (retract ?Mov)
+   (assert (nMovimientos (+ ?n 1)))
 )
 
 (defrule actAntSouth  (declare (salience 1000))
@@ -405,6 +408,8 @@
    (hice south)
     ?pos <- (pos ?x1 ?y1)
     ?casilla <- (casilla (x ?x1) (y ?y1) (visitado ?) (radiacion ?radiacion))
+    ?Mov <- (nMovimientos ?n)
+(test (< ?n 600))
    =>
    (retract ?ant)
    (assert (ant north))
@@ -414,6 +419,9 @@
    (assert (pos ?x1 (+ ?y1 1)))
     (retract ?casilla)
    (assert (casilla (x ?x1) (y ?y1) (visitado true) (radiacion ?radiacion)))
+   (retract ?Mov)
+   (assert (nMovimientos (+ ?n 1)))
+
 )
 
 (defrule actAntEast (declare (salience 1000))
@@ -422,6 +430,8 @@
    (hice east)
    ?pos <- (pos ?x1 ?y1)
    ?casilla <- (casilla (x ?x1) (y ?y1) (visitado ?) (radiacion ?radiacion))
+    ?Mov <- (nMovimientos ?n)
+(test (< ?n 600))
    =>
    (retract ?ant)
    (assert (ant west))
@@ -431,6 +441,9 @@
    (assert (pos (+ ?x1 1) ?y1))
    (retract ?casilla)
    (assert (casilla (x ?x1) (y ?y1) (visitado true) (radiacion ?radiacion)))
+   (retract ?Mov)
+   (assert (nMovimientos (+ ?n 1)))
+
 )
 
 (defrule actAntWest  (declare (salience 1000))
@@ -439,6 +452,8 @@
    (hice west)
    ?pos <- (pos ?x1 ?y1)
    ?casilla <- (casilla (x ?x1) (y ?y1) (visitado ?) (radiacion ?radiacion))
+   ?Mov <- (nMovimientos ?n)
+   (test (< ?n 600))
    =>
    (retract ?ant)
    (assert (ant east))
@@ -448,6 +463,9 @@
    (assert (pos (- ?x1 1) ?y1))
    (retract ?casilla)
    (assert (casilla (x ?x1) (y ?y1) (visitado true) (radiacion ?radiacion)))
+   (retract ?Mov)
+   (assert (nMovimientos (+ ?n 1)))
+
 )
 ;----------------------------------Actualizar las posiciones(alien cerca)---------------------------------------
 (defrule actAntNorthAlien (declare (salience 1000))
@@ -531,6 +549,7 @@
    (moveWilly east)
 )
 
+
 (defrule moverWilly
     (directions $? ?dir $?)
     ?h <- (hice ?x)
@@ -543,22 +562,34 @@
    (moveWilly ?dir)
 )
 
-(defrule moverWillySouth (declare (salience 1))
-    (directions $? south $?)
-	?h <- (hice east)
-    ?act <- (act algo)
+
+;-----------------------------------------------Movimientos normales------------------------------
+
+
+;-----------------------------------------------Movimientos prioriza----------------------------
+
+(defrule moverWillySouthP (declare (salience 10))
+   (directions $? south $?)
+	?h <- (hice ?)
+   ?act <- (act algo)
+   (pos ?x1 ?y1)
+   (casilla (x ?x1) (y ?y2) (visitado false) (radiacion ?))
+   (test (= ?y2 (+ ?y1 1)))
     =>
 	(retract ?h)
 	(assert (hice south))
-    (retract ?act)
+   (retract ?act)
    (assert (act nada)) 
-    (moveWilly south)
+   (moveWilly south)
 )
 
-(defrule moverWillyEast (declare (salience 1))
+(defrule moverWillyEastP (declare (salience 10))
     (directions $? east $?)
-	?h <- (hice south)
+	?h <- (hice ?)
     ?act <- (act algo)
+   (pos ?x1 ?y1)
+   (casilla (x ?x2) (y ?y1) (visitado false) (radiacion ?))
+   (test (= ?x2 (+ ?x1 1)))
     =>
 	(retract ?h)
 	(assert (hice east))
@@ -566,6 +597,39 @@
    (assert (act nada)) 
     (moveWilly east)
 )
+
+
+(defrule moverWillyNorthP (declare (salience 11))
+   (directions $? north $?)
+	?h <- (hice ?)
+   ?act <- (act algo)
+   (pos ?x1 ?y1)
+   (casilla (x ?x1) (y ?y2) (visitado false) (radiacion ?))
+   (test (= ?y2 (- ?y1 1)))
+    =>
+	(retract ?h)
+	(assert (hice north))
+   (retract ?act)
+   (assert (act nada)) 
+   (moveWilly north)
+)
+
+(defrule moverWillyWestP (declare (salience 11))
+    (directions $? east $?)
+	?h <- (hice ?)
+    ?act <- (act algo)
+   (pos ?x1 ?y1)
+   (casilla (x ?x2) (y ?y1) (visitado false) (radiacion ?))
+   (test (= ?x2 (- ?x1 1)))
+    =>
+	(retract ?h)
+	(assert (hice west))
+    (retract ?act)
+   (assert (act nada)) 
+    (moveWilly west)
+)
+
+
 ;------------------------------------------------Detectar---------------------------------------
 
 (defrule perceptPull (declare (salience 2000))
