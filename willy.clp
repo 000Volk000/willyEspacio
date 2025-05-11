@@ -3,61 +3,73 @@
     (ant nada)
     (nMovimientos 0) ;
     (act inicial)
+    (pos 0 0)
 )
 
 (defrule actAntNorth (declare (salience 1000))
    ?act <- (act nada)
-   ?ant <- (ant ?x)
+   ?ant <- (ant ?)
    (hice north)
+    ?pos <- (pos ?x1 ?y1)
    =>
    (retract ?ant)
    (assert (ant south))
    (retract ?act)
    (assert (act algo))
+    (retract ?pos)
+   (assert (pos ?x1 (- ?y1 1)))
 )
 
 (defrule actAntSouth  (declare (salience 1000))
    ?act <- (act nada)
-   ?ant <- (ant ?x)
+   ?ant <- (ant ?)
    (hice south)
+    ?pos <- (pos ?x1 ?y1)
    =>
    (retract ?ant)
    (assert (ant north))
    (retract ?act)
    (assert (act algo))
+    (retract ?pos)
+   (assert (pos ?x1 (+ ?y1 1)))
 )
 
 (defrule actAntEast (declare (salience 1000))
    ?act <- (act nada)
-   ?ant <- (ant ?x)
+   ?ant <- (ant ?)
    (hice east)
+   ?pos <- (pos ?x1 ?y1)
    =>
    (retract ?ant)
    (assert (ant west))
    (retract ?act)
    (assert (act algo))
+    (retract ?pos)
+   (assert (pos (+ ?x1 1) ?y1))
 )
 
 (defrule actAntWest  (declare (salience 1000))
    ?act <- (act nada)
-   ?ant <- (ant ?x)
+   ?ant <- (ant ?)
    (hice west)
+   ?pos <- (pos ?x1 ?y1)
    =>
    (retract ?ant)
    (assert (ant east))
    (retract ?act)
    (assert (act algo))
+      (retract ?pos)
+   (assert (pos (- ?x1 1) ?y1))
 )
 (defrule moverWillyInicio
-    (directions $? ?dir $?)
-    ?h <- (hice ?x)
     ?act <- (act inicial)
+    ?h <- (hice nada)
     =>
-	(retract ?h)
-	(assert (hice ?dir))
+    (retract ?h)
+	(assert (hice east))
    (retract ?act)
-   (assert (act nada))    
-   (moveWilly ?dir)
+   (assert (act nada))
+   (moveWilly east)
 )
 
 (defrule moverWilly
@@ -113,9 +125,10 @@
 (percepts Noise)
 (hasLaser)
 (hice ?hice)
+(ant ?ant)
+(directions ?ant $? ?x $?)
 =>
-(fireLaser ?hice)
-
+(fireLaser ?x)
 )
 
 
