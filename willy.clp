@@ -665,12 +665,38 @@
 
 ;------------------------------------------------Disparar---------------------------------------
 
-(defrule Disparar (declare (salience 2001))
-(percepts Noise)
-(hasLaser)
-(casilla (x ?x1) (y ?y1) (visitado ?) (radiacion true))
-(directions $? ?x $?)
-=>
-(fireLaser ?x)
+(defrule DispararNorthRight (declare (salience 10000))
+   (percepts Noise)
+   (hasLaser)
+   (pos ?x1 ?y1)
+   (directions $? north $?)
+   (casilla (x ?x2) (y ?y2) (visitado ?) (radiacion true))
+   (test (= ?x2 (+ ?x1 1)))
+   (test (= ?y2 (- ?y1 1)))
+   =>
+   (fireLaser north)
 )
 
+(defrule DispararNorthLeft (declare (salience 10000))
+   (percepts Noise)
+   (hasLaser)
+   (pos ?x1 ?y1)
+   (directions $? north $?)
+   (casilla (x ?x2) (y ?y2) (visitado ?) (radiacion true))
+   (test (= ?x2 (- ?x1 1)))
+   (test (= ?y2 (- ?y1 1)))
+   =>
+   (fireLaser north)
+)
+
+(defrule DispararNorthUp (declare (salience 10000))
+   (percepts Noise)
+   (hasLaser)
+   (pos ?x1 ?y1)
+   (directions $? north $?)
+   (casilla (x ?x2) (y ?y2) (visitado ?) (radiacion true))
+   (test (= ?x2 ?x1))
+   (test (= ?y2 (- ?y1 2)))
+   =>
+   (fireLaser north)
+)
