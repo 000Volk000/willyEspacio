@@ -388,7 +388,7 @@
     ?pos <- (pos ?x1 ?y1)
     ?casilla <- (casilla (x ?x1) (y ?y1) (visitado ?) (radiacion ?radiacion))
     ?Mov <- (nMovimientos ?n)
-    (test (< ?n 700))
+    (test (< ?n 400))
    =>
    (retract ?ant)
    (assert (ant south))
@@ -409,7 +409,7 @@
     ?pos <- (pos ?x1 ?y1)
     ?casilla <- (casilla (x ?x1) (y ?y1) (visitado ?) (radiacion ?radiacion))
     ?Mov <- (nMovimientos ?n)
-(test (< ?n 700))
+(test (< ?n 400))
    =>
    (retract ?ant)
    (assert (ant north))
@@ -431,7 +431,7 @@
    ?pos <- (pos ?x1 ?y1)
    ?casilla <- (casilla (x ?x1) (y ?y1) (visitado ?) (radiacion ?radiacion))
     ?Mov <- (nMovimientos ?n)
-(test (< ?n 700))
+(test (< ?n 400))
    =>
    (retract ?ant)
    (assert (ant west))
@@ -453,7 +453,7 @@
    ?pos <- (pos ?x1 ?y1)
    ?casilla <- (casilla (x ?x1) (y ?y1) (visitado ?) (radiacion ?radiacion))
    ?Mov <- (nMovimientos ?n)
-   (test (< ?n 700))
+   (test (< ?n 400))
    =>
    (retract ?ant)
    (assert (ant east))
@@ -550,7 +550,7 @@
 )
 
 
-(defrule moverWilly
+(defrule moverWilly (declare (salience 0))
     (directions $? ?dir $?)
     ?h <- (hice ?x)
     ?act <- (act algo)
@@ -615,7 +615,7 @@
 )
 
 (defrule moverWillyWestP (declare (salience 11))
-    (directions $? east $?)
+    (directions $? west $?)
 	?h <- (hice ?)
     ?act <- (act algo)
    (pos ?x1 ?y1)
