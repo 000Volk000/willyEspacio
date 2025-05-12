@@ -671,6 +671,9 @@
    (pos ?x1 ?y1)
    (directions $? north $?)
    (casilla (x ?x2) (y ?y2) (visitado ?) (radiacion true))
+   (casilla (x ?x3) (y ?y3) (visitado false) (radiacion ?))
+   (test (= ?y3 (- ?y1 1)))
+   (test (= ?x3 ?x1))
    (test (= ?x2 (+ ?x1 1)))
    (test (= ?y2 (- ?y1 1)))
    =>
@@ -683,6 +686,9 @@
    (pos ?x1 ?y1)
    (directions $? north $?)
    (casilla (x ?x2) (y ?y2) (visitado ?) (radiacion true))
+   (casilla (x ?x3) (y ?y3) (visitado false) (radiacion ?))
+   (test (= ?y3 (- ?y1 1)))
+   (test (= ?x3 ?x1))
    (test (= ?x2 (- ?x1 1)))
    (test (= ?y2 (- ?y1 1)))
    =>
@@ -695,6 +701,9 @@
    (pos ?x1 ?y1)
    (directions $? north $?)
    (casilla (x ?x2) (y ?y2) (visitado ?) (radiacion true))
+   (casilla (x ?x3) (y ?y3) (visitado false) (radiacion ?))
+   (test (= ?y3 (- ?y1 1)))
+   (test (= ?x3 ?x1))
    (test (= ?x2 ?x1))
    (test (= ?y2 (- ?y1 2)))
    =>
@@ -707,6 +716,9 @@
    (pos ?x1 ?y1)
    (directions $? east $?)
    (casilla (x ?x2) (y ?y2) (visitado ?) (radiacion true))
+   (casilla (x ?x3) (y ?y3) (visitado false) (radiacion ?))
+   (test (= ?x3 (+ ?x1 1)))
+   (test (= ?y3 ?y1))
    (test (= ?x2 (+ ?x1 1)))
    (test (= ?y2 (+ ?y1 1)))
    =>
@@ -719,6 +731,9 @@
    (pos ?x1 ?y1)
    (directions $? east $?)
    (casilla (x ?x2) (y ?y2) (visitado ?) (radiacion true))
+   (casilla (x ?x3) (y ?y3) (visitado false) (radiacion ?))
+   (test (= ?x3 (+ ?x1 1)))
+   (test (= ?y3 ?y1))
    (test (= ?x2 (+ ?x1 2)))
    (test (= ?y2 ?y1))
    =>
@@ -731,6 +746,9 @@
    (pos ?x1 ?y1)
    (directions $? east $?)
    (casilla (x ?x2) (y ?y2) (visitado ?) (radiacion true))
+   (casilla (x ?x3) (y ?y3) (visitado false) (radiacion ?))
+   (test (= ?x3 (+ ?x1 1)))
+   (test (= ?y3 ?y1))
    (test (= ?x2 (+ ?x1 1)))
    (test (= ?y2 (- ?y1 1)))
    =>
@@ -743,6 +761,9 @@
    (pos ?x1 ?y1)
    (directions $? west $?)
    (casilla (x ?x2) (y ?y2) (visitado ?) (radiacion true))
+   (casilla (x ?x3) (y ?y3) (visitado false) (radiacion ?))
+   (test (= ?x3 (- ?x1 1)))
+   (test (= ?y3 ?y1))
    (test (= ?x2 (- ?x1 1)))
    (test (= ?y2 (+ ?y1 1)))
    =>
@@ -755,6 +776,9 @@
    (pos ?x1 ?y1)
    (directions $? west $?)
    (casilla (x ?x2) (y ?y2) (visitado ?) (radiacion true))
+   (casilla (x ?x3) (y ?y3) (visitado false) (radiacion ?))
+   (test (= ?x3 (- ?x1 1)))
+   (test (= ?y3 ?y1))
    (test (= ?x2 (- ?x1 2)))
    (test (= ?y2 ?y1))
    =>
@@ -767,6 +791,9 @@
    (pos ?x1 ?y1)
    (directions $? west $?)
    (casilla (x ?x2) (y ?y2) (visitado ?) (radiacion true))
+   (casilla (x ?x3) (y ?y3) (visitado false) (radiacion ?))
+   (test (= ?x3 (- ?x1 1)))
+   (test (= ?y3 ?y1))
    (test (= ?x2 (- ?x1 1)))
    (test (= ?y2 (- ?y1 1)))
    =>
@@ -779,6 +806,9 @@
    (pos ?x1 ?y1)
    (directions $? south $?)
    (casilla (x ?x2) (y ?y2) (visitado ?) (radiacion true))
+   (casilla (x ?x3) (y ?y3) (visitado false) (radiacion ?))
+   (test (= ?y3 (+ ?y1 1)))
+   (test (= ?x3 ?x1))
    (test (= ?x2 (+ ?x1 1)))
    (test (= ?y2 (+ ?y1 1)))
    =>
@@ -791,6 +821,9 @@
    (pos ?x1 ?y1)
    (directions $? south $?)
    (casilla (x ?x2) (y ?y2) (visitado ?) (radiacion true))
+   (casilla (x ?x3) (y ?y3) (visitado false) (radiacion ?))
+   (test (= ?y3 (+ ?y1 1)))
+   (test (= ?x3 ?x1))
    (test (= ?x2 (- ?x1 1)))
    (test (= ?y2 (+ ?y1 1)))
    =>
@@ -803,6 +836,9 @@
    (pos ?x1 ?y1)
    (directions $? south $?)
    (casilla (x ?x2) (y ?y2) (visitado ?) (radiacion true))
+   (casilla (x ?x3) (y ?y3) (visitado false) (radiacion ?))
+   (test (= ?y3 (+ ?y1 1)))
+   (test (= ?x3 ?x1))
    (test (= ?x2 ?x1))
    (test (= ?y2 (+ ?y1 2)))
    =>
